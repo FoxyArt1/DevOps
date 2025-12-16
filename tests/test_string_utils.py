@@ -20,11 +20,11 @@ def test_uppercase_letters_list():
 def test_print_string_non_string_prints_error(capsys):
     print_string(123)
     out = capsys.readouterr().out
-    assert "Помилка, приймає текст" in out
+    assert "Помилка! Приймає текст" in out
 
 
 def test_analyze_string_case_non_string_prints_error(capsys):
     result = analyze_string_case(123)
     out = capsys.readouterr().out
     assert result is None
-    assert "Помилка, приймає текст" in out
+    assert "Помилка! Приймає текст" in out
