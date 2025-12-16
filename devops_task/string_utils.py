@@ -1,3 +1,4 @@
+#some comments for branches
 def print_string(value) -> None:
     if not isinstance(value, str):
         print("Помилка, приймає текст")
