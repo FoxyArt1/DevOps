@@ -1,19 +1,23 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>{{ post.title }}</title>
-</head>
-<body>
-  <a href="{% url 'blog:post_list' %}">Back to list</a>
+{% extends "blog/base.html" %}
+
+{% block title %}
+  {{ post.title }}
+{% endblock %}
+
+{% block content %}
+  <a href="{% url 'blog:post_list' %}">← Back to list</a>
 
   <h1>{{ post.title }}</h1>
-  <p>{{ post.publish }}</p>
-  <p>Author: {{ post.author }}</p>
-  <p>Status: {{ post.get_status_display }}</p>
+
+  <p>
+    Published {{ post.publish }} by {{ post.author }}
+  </p>
+
+  <p>
+    Status: {{ post.get_status_display }}
+  </p>
 
   <div>
     {{ post.body|linebreaks }}
   </div>
-</body>
-</html>
+{% endblock %}
