@@ -99,6 +99,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Конфігурація сервера електронної пошти
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mishasikalyuk1@gmail.com'
+EMAIL_HOST_PASSWORD = 'fpal yrjd mupf duwm'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
