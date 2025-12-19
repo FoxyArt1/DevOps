@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse 
 from django.utils import timezone
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
+
 
 
 
@@ -13,6 +15,8 @@ class PublishedManager(models.Manager):
 class Post(models.Model):
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     publish = models.DateTimeField(default=timezone.now)
+    tags = TaggableManager()
+
 
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
@@ -46,7 +50,7 @@ class Post(models.Model):
                          self.publish.month,
                          self.publish.day,
                          self.slug])
-                         
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=80)

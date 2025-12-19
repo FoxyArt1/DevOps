@@ -1,44 +1,58 @@
-{% extends "blog/base.html" %}
 
-{% block title %}
-  {{ post.title }}
-{% endblock %}
+  {% extends "blog/base.html" %}
+  {% load blog_tags %}
 
-{% block content %}
-  <a href="{% url 'blog:post_list' %}">← Back to list</a>
 
-  <h1>{{ post.title }}</h1>
+  {% block title %}
+    {{ post.title }}
+  {% endblock %}
 
-  <p>
-    Published {{ post.publish }} by {{ post.author }}
-  </p>
+  {% block content %}
+    <a href="{% url 'blog:post_list' %}">← Back to list</a>
 
-  <p>
-    Status: {{ post.get_status_display }}
-  </p>
+    <h1>{{ post.title }}</h1>
 
-  <p>
-	<a href="{% url 'blog:post_share' post.id %}">
-		Поділитися
-	</a>
-  </p>
-  {% with comments.count as total_comments %}
-    	<h2>{{ total_comments }} коментар{{ total_comments|pluralize }}</h2>
-    {% endwith %}
+    <p>
+      Published {{ post.publish }} by {{ post.author }}
+    </p>
 
-    {% for comment in comments %}
-        <div class="comment">
-            <p class="info">Коментар {{ forloop.counter }} від {{ comment.name }} на {{ comment.created }}</p>
-            <p>{{ comment.body|linebreaks }}</p>
-        </div>
+    <p>
+      Status: {{ post.get_status_display }}
+    </p>
+
+    <p>
+    <a href="{% url 'blog:post_share' post.id %}">
+      Поділитися
+    </a>
+    </p>
+    {% with comments.count as total_comments %}
+        <h2>{{ total_comments }} коментар{{ total_comments|pluralize }}</h2>
+      {% endwith %}
+
+      {% for comment in comments %}
+          <div class="comment">
+              <p class="info">Коментар {{ forloop.counter }} від {{ comment.name }} на {{ comment.created }}</p>
+              <p>{{ comment.body|linebreaks }}</p>
+          </div>
+      {% empty %}
+          <p>Немає коментарів.</p>
+      {% endfor %}
+      
+      <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
+
+      <h2>Схожі публікації</h2>
+    {% for post in similar_posts %}
+      <p>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+      </p>
     {% empty %}
-        <p>Немає коментарів.</p>
-    {% endfor %}
+        Схожих публікацій ще немає.
+      {% endfor %}
 
 
+    <div>
+      {{ post.body|markdown }}
+    </div>
 
-  <div>
-    {{ post.body|linebreaks }}
-  </div>
-{% include "blog/post/includes/comment_form.html" %}
-{% endblock %}
+  {% include "blog/post/includes/comment_form.html" %}
+  {% endblock %}
